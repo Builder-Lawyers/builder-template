@@ -1,0 +1,20 @@
+---
+import type { HeaderProps } from "@/components/types";
+import ComponentLayout from "@/shared/ui/ComponentLayout.astro";
+
+const props = Astro.props as HeaderProps;
+const { title, navigation } = props;
+---
+
+<header data-type="header" class="border-b h-[96px] w-full">
+  <ComponentLayout>
+    <div class="flex h-full items-center w-full justify-between">
+      <h1 data-props="title">{title}</h1>
+      <nav data-props="navigation">
+        <ul class="uppercase" data-props="navigation.label">
+          {navigation.map((item) => <li>{item.label}/</li>)}
+        </ul>
+      </nav>
+    </div>
+  </ComponentLayout>
+</header>

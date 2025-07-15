@@ -1,0 +1,12 @@
+---
+import type { JSX } from "astro/jsx-runtime";
+import clsx from "clsx";
+
+interface Props extends JSX.HTMLAttributes {}
+
+const props = Astro.props as Props;
+---
+
+<div {...props} class={clsx("px-[48px] w-full h-full", props.class)}>
+  <slot />
+</div>

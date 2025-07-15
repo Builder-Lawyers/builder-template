@@ -1,0 +1,27 @@
+---
+import "@/shared/styles/index.css";
+import type { Widget, PageData } from "@/components/fabric";
+import { astroFactory } from "@/components/fabric";
+import { pageData } from "./page";
+import PageLayout from "../shared/ui/PageLayout.astro";
+
+const widgets: Widget[] = pageData.widgets.map((w) => {
+  return {
+    ...w,
+    type: w.type as Widget["type"],
+  };
+});
+
+const pages: PageData = { widgets };
+---
+
+<html>
+  <body class="max-w-[1440px] m-auto flex justify-center w-full">
+    {
+      pages?.widgets?.map((widget) => {
+        const Component = astroFactory[widget.type];
+        return <Component {...widget.props} />;
+      })
+    }
+  </body>
+</html>
