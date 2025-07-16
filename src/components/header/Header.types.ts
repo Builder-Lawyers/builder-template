@@ -9,7 +9,3 @@ export interface HeaderProps {
     href: string;
   }>;
 }
-
-export type WidgetMap = {
-  header: HeaderProps;
-};

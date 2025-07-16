@@ -9,6 +9,8 @@
 }
 
 @theme {
+    --text-xs: 14px;
+    --text-sm: 16px;
     --font-title: "NAMU", "sans-serif";
     --font-description: "Mulish", "sans-serif";
 }

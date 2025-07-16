@@ -1,0 +1,12 @@
+---
+import ComponentLayout from "@/shared/ui/ComponentLayout.astro";
+import Button from "@/shared/ui/Button.astro";
+import type { HeaderProps } from "./Header.types";
+
+const props = Astro.props as HeaderProps;
+const { title, navigation, buttons } = props;
+---
+
+<header class="border-b h-[96px] w-full">
+  {title}
+</header>

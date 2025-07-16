@@ -1,4 +1,4 @@
-import type { WidgetMap } from "@/components/types";
+import type { WidgetMap } from "@/components";
 
 export type Widget = {
   [K in keyof WidgetMap]: {
@@ -7,14 +7,20 @@ export type Widget = {
   };
 }[keyof WidgetMap];
 
-export type PageData = {
+export type Page = {
+  title: string;
+  slug: string | undefined;
   widgets: Widget[];
+};
+
+export type PageData = {
+  pages: Page[];
 };
 
 type AstroComponent<Props> = (props: Props) => any;
 
 const modules = import.meta.glob<{ default: AstroComponent<any> }>(
-  "./*.astro",
+  "../*/**/*.astro",
   { eager: true },
 );
 

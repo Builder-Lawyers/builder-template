@@ -3,10 +3,10 @@
 import { defineConfig } from "astro/config";
 
 import tailwindcss from "@tailwindcss/vite";
-
+import { AstroPropsInjector } from "./AstroPropsInjector.js";
 // https://astro.build/config
 export default defineConfig({
   vite: {
-    plugins: [tailwindcss()],
+    plugins: [tailwindcss(), AstroPropsInjector()],
   },
 });

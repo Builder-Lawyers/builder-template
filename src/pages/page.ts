@@ -1,14 +1,24 @@
-import type { PageData } from "@/components/fabric.ts";
+import type { PageData } from "@/components/fabric/fabric.ts";
 
 export const pageData: PageData = {
-  widgets: [
+  pages: [
     {
-      type: "header",
-      props: {
-        title: "Builder Test",
-        navigation: [{ label: "Home", href: "/" }],
-        buttons: [{ label: "Click me", href: "/" }],
-      },
+      title: "My Page Title",
+      slug: undefined,
+      widgets: [
+        {
+          type: "header",
+          props: {
+            title: "Builder Test",
+            navigation: [
+              { label: "Home", href: "#" },
+              { label: "About me", href: "#" },
+              { label: "Services", href: "#" },
+            ],
+            buttons: [{ label: "Click me", href: "#" }],
+          },
+        },
+      ],
     },
   ],
 };
