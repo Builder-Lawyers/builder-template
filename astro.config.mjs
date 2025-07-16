@@ -7,6 +7,6 @@ import { AstroPropsInjector } from "./AstroPropsInjector.js";
 // https://astro.build/config
 export default defineConfig({
   vite: {
-    plugins: [tailwindcss(), AstroPropsInjector()],
+    plugins: [tailwindcss()],
   },
 });

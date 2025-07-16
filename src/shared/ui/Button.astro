@@ -1,7 +1,46 @@
 ---
+type ButtonType = "default" | "accent";
 
+interface Props {
+  variant?: ButtonType;
+  href?: string;
+  blank?: boolean;
+}
+
+const { variant = "default", href = "#", blank = false } = Astro.props as Props;
 ---
 
-<button class="bg-black text-white px-[24px] py-[12px] rounded-[16px]">
-  <slot />
-</button>
+<a
+  href={href}
+  target={blank ? "_self" : "_blank"}
+  rel={blank ? "noopener noreferrer" : undefined}
+  class="group flex items-center cursor-pointer"
+>
+  <span
+    class="flex bg-black text-white px-[24px] py-[12px] rounded-[16px] transition-colors group-hover:bg-black/70"
+  >
+    <slot />
+  </span>
+
+  {
+    variant === "accent" && (
+      <span
+        class="bg-black text-white flex items-center justify-center rounded-[16px] transition-colors group-hover:bg-black/70 "
+        style="width: calc(16px * 2 + 1em); height: calc(16px * 2 + 1em);"
+      >
+        <svg
+          width="11"
+          height="10"
+          viewBox="0 0 11 10"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M9.58682 9.19459C9.97044 9.14664 10.2425 8.79679 10.1946 8.41318L9.41318 2.16183C9.36522 1.77821 9.01537 1.5061 8.63176 1.55405C8.24814 1.60201 7.97603 1.95186 8.02399 2.33547L8.71858 7.89223L3.16182 8.58682C2.77821 8.63478 2.5061 8.98463 2.55405 9.36824C2.60201 9.75186 2.95186 10.024 3.33547 9.97601L9.58682 9.19459ZM0.5 1.5L0.0702416 2.05255L9.07024 9.05255L9.5 8.5L9.92976 7.94745L0.929758 0.947453L0.5 1.5Z"
+            fill="currentColor"
+          />
+        </svg>
+      </span>
+    )
+  }
+</a>

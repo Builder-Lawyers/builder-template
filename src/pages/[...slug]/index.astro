@@ -1,12 +1,16 @@
 ---
-import "@/shared/styles/index.css";
-import type { Widget, PageData } from "@/components/fabric/fabric";
+import "@/pages/index.css";
 import { astroFactory } from "@/components/fabric/fabric";
-import { pageData } from "../page";
 import type { Page } from "../../components/fabric/fabric";
+import { pageData } from "../page";
+import AppLayout from "@/shared/ui/layout/App/AppLayout.astro";
 
 export function getStaticPaths() {
-  const pages: Page[] = pageData.pages;
+  if (pageData.error) {
+    throw new Error(pageData.error.message);
+  }
+
+  const pages: Page[] = pageData?.data.pages;
   return pages.map((page) => {
     return {
       params: { slug: page.slug },
@@ -19,14 +23,36 @@ const props: Page = Astro.props;
 ---
 
 <html>
-  <title>{props.title}</title>
-
-  <body class="max-w-[1440px] m-auto flex flex-col justify-center w-full">
-    {
-      props?.widgets?.map((widget) => {
-        const Component = astroFactory[widget.type];
-        return <Component {...widget.props} />;
-      })
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap"
+      rel="stylesheet"
+    />
+    <title>{props.title}</title>
+  </head>
+  <body>
+    <AppLayout>
+      {
+        props?.widgets?.map((widget) => {
+          const type = widget.type as keyof typeof astroFactory;
+          const Component = astroFactory[type];
+          return <Component {...(widget.props as any)} />;
+        })
+      }
+    </AppLayout>
   </body>
+  <style>
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
 </html>

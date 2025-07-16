@@ -1,12 +1,24 @@
 ---
-import ComponentLayout from "@/shared/ui/ComponentLayout.astro";
-import Button from "@/shared/ui/Button.astro";
 import type { HeaderProps } from "./Header.types";
+import { autoProps } from "@/shared/lib/utils/autoProps";
+import Button from "@/shared/ui/Button.astro";
 
-const props = Astro.props as HeaderProps;
-const { title, navigation, buttons } = props;
+const props = autoProps(Astro.props as HeaderProps);
 ---
 
-<header class="border-b h-[96px] w-full">
-  {title}
+<header
+  id="header"
+  slot="header"
+  class="border-b h-[96px] items-center justify-center w-full"
+>
+  <div class="h-full flex justify-between items-center w-full">
+    <h1>{props.title}</h1>
+    {
+      props?.buttons?.map((item) => (
+        <Button variant="accent" href={item.href}>
+          {item.label}
+        </Button>
+      ))
+    }
+  </div>
 </header>

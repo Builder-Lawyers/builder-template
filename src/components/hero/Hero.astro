@@ -1,26 +1,22 @@
 ---
-import ComponentLayout from "@/shared/ui/ComponentLayout.astro";
 import Button from "@/shared/ui/Button.astro";
 import type { HeroProps } from "./Hero.types";
 
 const props = Astro.props as HeroProps;
 ---
 
-<header data-type="header" class="border-b h-[96px] w-full">
-  <ComponentLayout>
-    <div class="flex h-full items-center w-full justify-between">
-      <h1 data-props="title">{props.title}</h1>
-      <div class="flex items-center max-w-[546px] justify-between w-full">
-        <nav data-props="navigation">
-          <ul
-            class="uppercase flex gap-[24px] text-xs"
-            data-props="navigation.label"
-          >
-            {props.navigation.map((item) => <li>{item.label}/</li>)}
-          </ul>
-        </nav>
-        {props.buttons?.map((item) => <Button>{item.label}</Button>)}
-      </div>
-    </div>
-  </ComponentLayout>
-</header>
+<div
+  class="flex flex-col gap-8 h-dvh max-h-[730px] items-center justify-center"
+>
+  <h2 class="text-center sm:text-6xl text-4xl">
+    {props.title}
+  </h2>
+  <div class="flex gap-4">
+    {
+      props?.buttons?.map((button) => (
+        <Button href={button.href}>{button?.label}</Button>
+      ))
+    }
+  </div>
+  <img src="/astro-logo-dark.svg" class="w-[120px]" alt="astro logotype" />
+</div>

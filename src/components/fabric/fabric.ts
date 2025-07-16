@@ -1,21 +1,60 @@
-import type { WidgetMap } from "@/components";
+import { z, type ZodObject } from "zod";
+import type { ZodTypeAny } from "zod/v3";
 
-export type Widget = {
-  [K in keyof WidgetMap]: {
-    type: K;
-    props: WidgetMap[K];
-  };
-}[keyof WidgetMap];
+export function createWidgetSchemaFrom(
+  modules: Record<string, Record<string, unknown>>,
+) {
+  const widgets = Object.entries(modules).map(([path, mod]) => {
+    const type = path.split("/").pop()?.split(".")[0]?.toLowerCase();
+    if (!type) throw new Error(`Неможливо отримати type з ${path}`);
 
-export type Page = {
-  title: string;
-  slug: string | undefined;
-  widgets: Widget[];
-};
+    const schema = Object.values(mod).find(
+      (v) =>
+        typeof v === "object" &&
+        v !== null &&
+        typeof (v as any).safeParse === "function",
+    );
 
-export type PageData = {
-  pages: Page[];
-};
+    if (!schema) {
+      throw new Error(`Файл ${path} не експортує жодної Zod-схеми`);
+    }
+
+    return z.object({
+      type: z.literal(type),
+      props: schema as ZodObject<any>,
+    });
+  });
+
+  if (widgets.length === 0) {
+    throw new Error("Жодної widget-схеми не знайдено");
+  }
+
+  return z.discriminatedUnion(
+    "type",
+    widgets as [ZodObject<any>, ...ZodObject<any>[]],
+  );
+}
+
+const schemaModules = import.meta.glob<{ schema: ZodTypeAny }>(
+  "../*/**/*.types.ts",
+  { eager: true },
+);
+
+export const WidgetSchema = createWidgetSchemaFrom(schemaModules);
+
+export const PageSchema = z.object({
+  title: z.string(),
+  slug: z.string().optional(),
+  widgets: z.array(WidgetSchema),
+});
+
+export const PageDataSchema = z.object({
+  pages: z.array(PageSchema),
+});
+
+export type Page = z.infer<typeof PageSchema>;
+export type PageData = z.infer<typeof PageDataSchema>;
+export type Widget = z.infer<typeof WidgetSchema>;
 
 type AstroComponent<Props> = (props: Props) => any;
 

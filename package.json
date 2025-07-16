@@ -19,7 +19,8 @@
     "csv-parse": "^6.0.0",
     "fast-glob": "^3.3.3",
     "fs-extra": "^11.3.0",
-    "tailwindcss": "^4.1.11"
+    "tailwindcss": "^4.1.11",
+    "zod": "^4.0.5"
   },
   "devDependencies": {
     "prettier": "^3.6.2",
