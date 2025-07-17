@@ -6,7 +6,7 @@ export function createWidgetSchemaFrom(
 ) {
   const widgets = Object.entries(modules).map(([path, mod]) => {
     const type = path.split("/").pop()?.split(".")[0]?.toLowerCase();
-    if (!type) throw new Error(`Неможливо отримати type з ${path}`);
+    if (!type) throw new Error(`Can't get types from: ${path}`);
 
     const schema = Object.values(mod).find(
       (v) =>
@@ -16,7 +16,7 @@ export function createWidgetSchemaFrom(
     );
 
     if (!schema) {
-      throw new Error(`Файл ${path} не експортує жодної Zod-схеми`);
+      throw new Error(`File ${path} doesn't export a valid schema.`);
     }
 
     return z.object({
@@ -26,7 +26,7 @@ export function createWidgetSchemaFrom(
   });
 
   if (widgets.length === 0) {
-    throw new Error("Жодної widget-схеми не знайдено");
+    throw new Error("Widget schema is empty.");
   }
 
   return z.discriminatedUnion(
@@ -44,7 +44,7 @@ export const WidgetSchema = createWidgetSchemaFrom(schemaModules);
 
 export const PageSchema = z.object({
   title: z.string(),
-  slug: z.string().optional(),
+  slug: z.string().optional().nullable(),
   widgets: z.array(WidgetSchema),
 });
 
