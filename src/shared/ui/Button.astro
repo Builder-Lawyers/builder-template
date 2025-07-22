@@ -1,4 +1,5 @@
 ---
+import { a } from "tailwindcss/dist/types-B254mqw1";
 type ButtonType = "default" | "accent";
 
 interface Props {
@@ -7,11 +8,17 @@ interface Props {
   blank?: boolean;
 }
 
-const { variant = "default", href = "#", blank = false } = Astro.props as Props;
+const {
+  variant = "default",
+  href = "#",
+  blank = false,
+  ...restProps
+} = Astro.props as Props;
 ---
 
 <a
   href={href}
+  {...restProps}
   target={blank ? "_self" : "_blank"}
   rel={blank ? "noopener noreferrer" : undefined}
   class="group flex items-center cursor-pointer"

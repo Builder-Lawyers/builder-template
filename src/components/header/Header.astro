@@ -7,18 +7,19 @@ const props = autoProps(Astro.props as HeaderProps);
 ---
 
 <header
-  id="header"
-  slot="header"
+  {...props.$(props, true)}
   class="border-b h-[96px] items-center justify-center w-full"
 >
   <div class="h-full flex justify-between items-center w-full">
-    <h1>{props.title}</h1>
-    {
-      props?.buttons?.map((item) => (
-        <Button variant="accent" href={item.href}>
-          {item.label}
-        </Button>
-      ))
-    }
+    <h1 {...props.$(props.title)}>{props.title}</h1>
+    <div {...props.$(props.buttons)}>
+      {
+        props?.buttons?.map((item) => (
+          <Button {...props.$(item)} variant="accent" href={item.href}>
+            {item.label}
+          </Button>
+        ))
+      }
+    </div>
   </div>
 </header>

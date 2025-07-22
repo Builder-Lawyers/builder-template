@@ -1,19 +1,26 @@
 {
+  "header": {
+    "type": "header",
+    "props": {
+      "id": "header",
+      "title": "Boilerplate Astro",
+      "buttons": [
+        {
+          "label": "GitHub",
+          "href": "https://github.com/Builder-Lawyers/builder-template"
+        }
+      ]
+    }
+  },
   "pages": [
     {
       "title": "Builder UI",
       "slug": "/",
       "widgets": [
         {
-          "type": "header",
-          "props": {
-            "title": "Boilerplate Astro",
-            "buttons": [{ "label": "GitHub", "href": "https://github.com/Builder-Lawyers/builder-template" }]
-          }
-        },
-        {
           "type": "hero",
           "props": {
+            "id": "hero-1",
             "title": "Astro boilerplate for Builder",
             "buttons": [
               {

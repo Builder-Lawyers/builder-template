@@ -1,20 +1,20 @@
 @import "tailwindcss";
 
 @font-face {
-    font-family: NAMU;
-    font-style: normal;
-    font-weight: 200 500;
-    font-display: swap;
-    src: url("/fonts/NAMU-1960.ttf") format("truetype");
+  font-family: NAMU;
+  font-style: normal;
+  font-weight: 200 500;
+  font-display: swap;
+  src: url("/fonts/NAMU-1960.ttf") format("truetype");
 }
 
 @theme {
-    --text-xs: 14px;
-    --text-sm: 16px;
-    --font-title: "NAMU", "sans-serif";
-    --font-description: "Mulish", "sans-serif";
+  --text-xs: 14px;
+  --text-sm: 16px;
+  --font-title: "NAMU", "sans-serif";
+  --font-description: "Mulish", "sans-serif";
 }
 
-body{
-    font-family: var(--font-title);
+body {
+  font-family: var(--font-title);
 }

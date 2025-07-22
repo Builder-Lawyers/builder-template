@@ -49,19 +49,16 @@ export const PageSchema = z.object({
 });
 
 export const PageDataSchema = z.object({
+  header: WidgetSchema,
   pages: z.array(PageSchema),
 });
-
-export type Page = z.infer<typeof PageSchema>;
-export type PageData = z.infer<typeof PageDataSchema>;
-export type Widget = z.infer<typeof WidgetSchema>;
-
-type AstroComponent<Props> = (props: Props) => any;
 
 const modules = import.meta.glob<{ default: AstroComponent<any> }>(
   "../*/**/*.astro",
   { eager: true },
 );
+
+type AstroComponent<Props> = (props: Props) => any;
 
 export const astroFactory: Record<string, AstroComponent<any>> = {};
 
@@ -70,3 +67,7 @@ for (const path in modules) {
 
   if (key) astroFactory[key] = modules[path].default;
 }
+
+export type Page = z.infer<typeof PageSchema>;
+export type PageData = z.infer<typeof PageDataSchema>;
+export type Widget = z.infer<typeof WidgetSchema>;

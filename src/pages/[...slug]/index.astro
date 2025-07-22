@@ -1,25 +1,32 @@
 ---
 import "@/pages/_index.css";
 import { astroFactory } from "@/components/fabric/fabric";
-import type { Page } from "../../components/fabric/fabric";
+import type { Page, Widget } from "../../components/fabric/fabric";
 import { pageData } from "../_page";
 import AppLayout from "@/shared/ui/layout/App/AppLayout.astro";
+import Header from "../../components/header/Header.astro";
 
 export function getStaticPaths() {
-  if (pageData.error) {
-    throw new Error(pageData.error.message);
-  }
+  if (pageData.error) throw new Error(pageData.error.message);
 
-  const pages: Page[] = pageData?.data.pages;
+  const pages = pageData.data.pages;
+  const header = pageData.data.header;
+
   return pages.map((page) => {
     return {
       params: { slug: page.slug },
-      props: { ...page },
+      props: {
+        ...page,
+        header,
+      },
     };
   });
 }
 
-const props: Page = Astro.props;
+const props = Astro.props as Page & {
+  header: Widget;
+  pages: Page[];
+};
 ---
 
 <html>
@@ -38,6 +45,7 @@ const props: Page = Astro.props;
   </head>
   <body>
     <AppLayout>
+      <Header slot="header" {...props.header?.props ?? {}} />
       {
         props?.widgets?.map((widget) => {
           const type = widget.type as keyof typeof astroFactory;
@@ -55,4 +63,6 @@ const props: Page = Astro.props;
       height: 100%;
     }
   </style>
+
+  <script src="./edit.js"></script>
 </html>

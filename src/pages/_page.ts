@@ -1,4 +1,4 @@
 import { PageDataSchema } from "@/components/fabric/fabric.ts";
-import pageDataJSON from "./_page.json";
+import pageDataRaw from "./_page.json";
 
-export const pageData = PageDataSchema.safeParse(pageDataJSON);
+export const pageData = PageDataSchema.safeParse(pageDataRaw);
