@@ -14,7 +14,7 @@ if (window.parent !== window) {
     syncPropsWithJson(json);
   });
 }
-
+// test
 document.addEventListener("click", (e) => {
   const target = e.target.closest("[data-widget-id]");
 
